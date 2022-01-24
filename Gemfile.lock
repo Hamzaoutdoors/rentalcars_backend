@@ -60,6 +60,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    bindex (0.8.1)
     bootsnap (1.10.2)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -91,6 +92,8 @@ GEM
     rack (2.2.3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
+    rack-mini-profiler (2.3.3)
+      rack (>= 1.2.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.1.4.4)
@@ -132,6 +135,11 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2021.5)
       tzinfo (>= 1.0.0)
+    web-console (4.2.0)
+      actionview (>= 6.0.0)
+      activemodel (>= 6.0.0)
+      bindex (>= 0.4.0)
+      railties (>= 6.0.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -146,8 +154,10 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
+  rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4, >= 6.1.4.4)
   tzinfo-data
+  web-console (>= 4.1.0)
 
 RUBY VERSION
    ruby 3.0.3p157
