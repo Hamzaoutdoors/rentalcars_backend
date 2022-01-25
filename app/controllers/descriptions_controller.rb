@@ -1,5 +1,5 @@
 class DescriptionsController < ApplicationController
-  before_action :set_description, only: [:show, :update, :destroy]
+  before_action :set_description, only: %i[show update destroy]
 
   # GET /descriptions
   def index
@@ -39,13 +39,14 @@ class DescriptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_description
-      @description = Description.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def description_params
-      params.require(:description).permit(:insurance_fee, :price_daily, :price_monthly)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_description
+    @description = Description.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def description_params
+    params.require(:description).permit(:insurance_fee, :price_daily, :price_monthly)
+  end
 end
