@@ -1,5 +1,5 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: %i[show update destroy]
+  before_action :set_car, only: %i[update destroy]
 
   # GET /cars
   def index
@@ -10,7 +10,8 @@ class CarsController < ApplicationController
 
   # GET /cars/1
   def show
-    render json: @car
+    @car = Car.find_by_id(params[:id])
+    render json: @car.to_json(include: [:description])
   end
 
   # POST /cars
