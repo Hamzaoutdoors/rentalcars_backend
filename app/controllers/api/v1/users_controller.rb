@@ -1,5 +1,4 @@
 class Api::V1::UsersController < ApplicationController
-
   # GET /users
   def index
     @cars = Car.all
@@ -18,8 +17,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   # DELETE /users/1
   def destroy

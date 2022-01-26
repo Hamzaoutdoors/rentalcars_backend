@@ -1,5 +1,4 @@
 class Api::V1::CarsController < ApplicationController
-
   # GET /cars
   def index
     @cars = Car.all
@@ -39,6 +38,7 @@ class Api::V1::CarsController < ApplicationController
   end
 
   private
+
   # Only allow a list of trusted parameters through.
   def car_params
     params.require(:car).permit(:name, :brand, :imgUrl)

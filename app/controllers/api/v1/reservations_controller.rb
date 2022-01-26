@@ -1,9 +1,8 @@
 class Api::V1::ReservationsController < ApplicationController
-
   # GET /reservations
   def index
     @reservations = Reservation.all
-    render json: @reservations.to_json(include: [ :city, :car=> {include: [:description]}])
+    render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
   end
 
   # GET /reservations/1
