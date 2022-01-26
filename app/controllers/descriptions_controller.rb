@@ -24,15 +24,6 @@ class DescriptionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /descriptions/1
-  def update
-    if @description.update(description_params)
-      render json: @description
-    else
-      render json: @description.errors, status: :unprocessable_entity
-    end
-  end
-
   # DELETE /descriptions/1
   def destroy
     @description.destroy

@@ -21,26 +21,12 @@ class Api::V1::ReservationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /reservations/1
-  def update
-    if @reservation.update(reservation_params)
-      render json: @reservation
-    else
-      render json: @reservation.errors, status: :unprocessable_entity
-    end
-  end
-
   # DELETE /reservations/1
   def destroy
     @reservation.destroy
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_reservation
-    @reservation = Reservation.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def reservation_params
