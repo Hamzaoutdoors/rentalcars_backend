@@ -4,7 +4,7 @@ class CreateDescriptions < ActiveRecord::Migration[6.1]
       t.string :insurance_fee
       t.decimal :price_daily
       t.decimal :price_monthly
-
+      t.string :color
       t.timestamps
     end
   end

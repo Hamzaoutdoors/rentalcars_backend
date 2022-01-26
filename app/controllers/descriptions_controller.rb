@@ -24,15 +24,6 @@ class DescriptionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /descriptions/1
-  def update
-    if @description.update(description_params)
-      render json: @description
-    else
-      render json: @description.errors, status: :unprocessable_entity
-    end
-  end
-
   # DELETE /descriptions/1
   def destroy
     @description.destroy
@@ -47,6 +38,6 @@ class DescriptionsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def description_params
-    params.require(:description).permit(:insurance_fee, :price_daily, :price_monthly)
+    params.require(:description).permit(:insurance_fee, :price_daily, :price_monthly, :color)
   end
 end

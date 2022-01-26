@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2022_01_25_161012) do
     t.string "insurance_fee"
     t.decimal "price_daily"
     t.decimal "price_monthly"
+    t.string "color"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "car_id", null: false

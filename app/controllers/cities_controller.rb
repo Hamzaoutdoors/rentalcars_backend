@@ -1,5 +1,5 @@
 class CitiesController < ApplicationController
-  before_action :set_city, only: %i[show update destroy]
+  before_action :set_city, only: %i[show destroy]
 
   # GET /cities
   def index
@@ -19,15 +19,6 @@ class CitiesController < ApplicationController
 
     if @city.save
       render json: @city, status: :created, location: @city
-    else
-      render json: @city.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /cities/1
-  def update
-    if @city.update(city_params)
-      render json: @city
     else
       render json: @city.errors, status: :unprocessable_entity
     end
