@@ -1,11 +1,9 @@
-class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[show update destroy]
+class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations
   def index
     @reservations = Reservation.all
-
-    render json: @reservations
+    render json: @reservations.to_json(include: [ :city, :car=> {include: [:description]}])
   end
 
   # GET /reservations/1
@@ -47,6 +45,6 @@ class ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:date)
+    params.require(:reservation).permit(:date, :user_id, :city_id, :car_id)
   end
 end

@@ -47,6 +47,6 @@ class DescriptionsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def description_params
-    params.require(:description).permit(:insurance_fee, :price_daily, :price_monthly)
+    params.require(:description).permit(:insurance_fee, :price_daily, :price_monthly, :color)
   end
 end
