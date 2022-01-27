@@ -14,10 +14,10 @@ class Api::V1::CarsController < ApplicationController
 
   # POST /cars
   def create
-    @car = Car.new(car_params)
+    @car = Car.new(car_params.merge(user_id: @user.id))
 
     if @car.save
-      render json: @car, status: :created, location: @car
+      render json: @car, status: :created
     else
       render json: @car.errors, status: :unprocessable_entity
     end
@@ -32,6 +32,6 @@ class Api::V1::CarsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def car_params
-    params.require(:car).permit(:name, :brand, :imgUrl)
+    params.require(:car).permit(:name, :brand, :imgUrl, :user_id)
   end
 end
