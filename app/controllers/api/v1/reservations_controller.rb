@@ -1,7 +1,7 @@
 class Api::V1::ReservationsController < ApplicationController
   # GET /reservations
   def index
-    @reservations = Reservation.all
+    @reservations = Reservation.where(user_id: @user.id)
     render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
   end
 
@@ -15,7 +15,7 @@ class Api::V1::ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
 
     if @reservation.save
-      render json: @reservation, status: :created, location: @reservation
+      render json: @reservation, status: :created
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end
