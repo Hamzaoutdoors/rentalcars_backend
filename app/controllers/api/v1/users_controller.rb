@@ -1,4 +1,7 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authorized, only: [:auto_login]
+  before_action :set_user, only: [:destroy ]
+
   # GET /users
   def index
     @cars = Car.all
@@ -10,25 +13,27 @@ class Api::V1::UsersController < ApplicationController
   def create
     user = User.new(user_params)
 
-    if @user.save
-      token = JsonWebToken.encode(user_id: user.id)
-      time = Time.now + 24.hours.to_i
-      render json: { token: token, time: time }, status: :ok
+    if user.save
+      token = encode_token({user_id: user.id})
+      render json: {user: user, token: token}
     else
-      head(:unprocessable_entity)
+      render json: {error: "Invalid username or password"}
     end
   end
 
   def login
-    user = User.find_by(username: params[:username])
+    user = User.find_by(username: params[:user][:username])
 
     if user
-      payload = {user_id: user.id}
-      token = encode(payload)
-      render :json => {user: user, token: token}
+      token = encode_token({user_id: user.id})
+      render json: {user: user, token: token}
     else
-      render json: {error: "User not found"}
+      render json: {error: "Invalid username or password"}
     end
+  end
+
+  def auto_login
+    render json: user
   end
 
   def token_authenticate

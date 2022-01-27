@@ -11,9 +11,10 @@ Rails.application.routes.draw do
      end
   end
 
-  post 'login', to: 'users#login'
-  get 'login', to: 'users#token_authenticate'
-  
-  root "api/v1/cars#index"
+  post 'signup', to: 'api/v1/users#create'
+  post '/login', to: 'api/v1/users#login'
+  get '/login', to: 'api/v1/users#auto_login'
+
+  root "api/v1/users#login"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
