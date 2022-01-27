@@ -4,9 +4,9 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users
   def index
-    @cars = Car.all
+    @users = User.all
 
-    render json: @cars
+    render json: @users
   end
 
   # POST /users
