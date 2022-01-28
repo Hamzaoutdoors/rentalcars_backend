@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
   end
 
   def decoded_token
-    if auth_header
+    unless auth_header
       token = auth_header.split[1]
       # header: { 'Authorization': 'Bearer <token>' }
       begin
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in_user
-    if decoded_token
+    unless decoded_token
       user_id = decoded_token[0]['user_id']
       @user = User.find_by(id: user_id)
     end
