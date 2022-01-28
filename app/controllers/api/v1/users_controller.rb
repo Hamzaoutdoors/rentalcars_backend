@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authorized, only: [:auto_login]
-  before_action :set_user, only: [:destroy ]
+  before_action :set_user, only: [:show, :destroy]
 
   # GET /users
   def index
@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
 
     if user.save
       token = encode_token({user_id: user.id})
-      render json: {user: user, token: token}
+      render json: {user: user, token: token, status: :created}
     else
       render json: {error: "Invalid username or password"}
     end
@@ -42,14 +42,21 @@ class Api::V1::UsersController < ApplicationController
     render json: user
   end
 
-  def show; end
+  def show
+    render json: @user
+  end
 
   # DELETE /users/1
   def destroy
+    render json: @user
     @user.destroy
   end
 
   private
+
+  def set_user
+    @user = User.find_by_id(params[:id])
+  end
 
   # Only allow a list of trusted parameters through.
   def user_params

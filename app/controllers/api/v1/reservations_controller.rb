@@ -1,4 +1,6 @@
 class Api::V1::ReservationsController < ApplicationController
+  before_action :set_reservation, only: [:show, :destroy]
+
   # GET /reservations
   def index
     @reservations = Reservation.where(user_id: @user.id)
@@ -23,10 +25,15 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /reservations/1
   def destroy
+    render json: @reservation
     @reservation.destroy
   end
 
   private
+  
+  def set_reservation
+    @reservation = Reservation.find_by_id(params[:id])
+  end
 
   # Only allow a list of trusted parameters through.
   def reservation_params

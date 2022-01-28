@@ -1,4 +1,7 @@
 class Api::V1::CarsController < ApplicationController
+  before_action :authorized
+  before_action :set_car, only: [:show, :destroy]
+
   # GET /cars
   def index
     @cars = Car.all
@@ -8,7 +11,6 @@ class Api::V1::CarsController < ApplicationController
 
   # GET /cars/1
   def show
-    @car = Car.find_by_id(params[:id])
     render json: @car.to_json(include: [:description])
   end
 
@@ -25,10 +27,16 @@ class Api::V1::CarsController < ApplicationController
 
   # DELETE /cars/1
   def destroy
+    render json: @car
+
     @car.destroy
   end
 
   private
+
+  def set_car
+    @car = Car.find_by_id(params[:id])
+  end
 
   # Only allow a list of trusted parameters through.
   def car_params
