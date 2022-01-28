@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authorized, only: [:auto_login]
-  before_action :set_user, only: [:show, :destroy]
+  before_action :set_user, only: %i[show destroy]
 
   # GET /users
   def index
@@ -14,10 +14,10 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      token = encode_token({user_id: user.id})
-      render json: {user: user, token: token, status: :created}
+      token = encode_token({ user_id: user.id })
+      render json: { user: user, token: token, status: :created }
     else
-      render json: {error: "Invalid username or password"}
+      render json: { error: 'Invalid username or password' }
     end
   end
 
@@ -25,10 +25,10 @@ class Api::V1::UsersController < ApplicationController
     user = User.find_by(username: params[:user][:username])
 
     if user
-      token = encode_token({user_id: user.id})
-      render json: {user: user, token: token}
+      token = encode_token({ user_id: user.id })
+      render json: { user: user, token: token }
     else
-      render json: {error: "Invalid username or password"}
+      render json: { error: 'Invalid username or password' }
     end
   end
 

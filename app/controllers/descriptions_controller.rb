@@ -27,7 +27,7 @@ class DescriptionsController < ApplicationController
   # DELETE /descriptions/1
   def destroy
     render json: @description
-    
+
     @description.destroy
   end
 

@@ -27,7 +27,7 @@ class CitiesController < ApplicationController
   # DELETE /cities/1
   def destroy
     render json: @city
-    
+
     @city.destroy
   end
 

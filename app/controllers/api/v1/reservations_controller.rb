@@ -1,5 +1,5 @@
 class Api::V1::ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :destroy]
+  before_action :set_reservation, only: %i[show destroy]
 
   # GET /reservations
   def index
@@ -30,7 +30,7 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   private
-  
+
   def set_reservation
     @reservation = Reservation.find_by_id(params[:id])
   end
