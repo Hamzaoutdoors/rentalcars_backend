@@ -11,6 +11,10 @@ Rails.application.routes.draw do
      end
   end
 
-  root "api/v1/cars#index"
+  post 'signup', to: 'api/v1/users#create'
+  post '/login', to: 'api/v1/users#login'
+  get '/auto_login', to: 'api/v1/users#auto_login'
+
+  root "api/v1/users#login"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
