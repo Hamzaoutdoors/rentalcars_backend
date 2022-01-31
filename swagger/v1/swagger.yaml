@@ -1,0 +1,236 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/cars":
+    get:
+      summary: list cars
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create car
+      responses:
+        '200':
+          description: successful
+  "/api/v1/cars/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show car
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete car
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{user_id}/reservations":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list reservations
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create reservation
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{user_id}/reservations/new":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: new reservation
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{user_id}/reservations/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show reservation
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete reservation
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    get:
+      summary: list users
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create user
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show user
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update user
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update user
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      responses:
+        '200':
+          description: successful
+  "/signup":
+    post:
+      summary: create user
+      responses:
+        '200':
+          description: successful
+  "/login":
+    post:
+      summary: login user
+      responses:
+        '200':
+          description: successful
+  "/auto_login":
+    get:
+      summary: auto_login user
+      responses:
+        '200':
+          description: successful
+  "/":
+    get:
+      summary: login user
+      responses:
+        '200':
+          description: successful
+  "/cities":
+    get:
+      summary: list cities
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create city
+      responses:
+        '200':
+          description: successful
+  "/cities/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show city
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update city
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update city
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete city
+      responses:
+        '200':
+          description: successful
+  "/descriptions":
+    get:
+      summary: list descriptions
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create description
+      responses:
+        '200':
+          description: successful
+  "/descriptions/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show description
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update description
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update description
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete description
+      responses:
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
