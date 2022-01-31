@@ -31,6 +31,7 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in?
+    # The !! is here to ensure that if logged_in_user return nil, this function will return false
     !!logged_in_user
   end
 
