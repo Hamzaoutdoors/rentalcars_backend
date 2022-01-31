@@ -11,7 +11,7 @@ Rails.application.routes.draw do
      end
   end
 
-  post 'signup', to: 'api/v1/users#create'
+  post '/signup', to: 'api/v1/users#create'
   post '/login', to: 'api/v1/users#login'
   get '/auto_login', to: 'api/v1/users#auto_login'
 
