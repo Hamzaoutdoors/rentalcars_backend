@@ -1,12 +1,9 @@
 require 'swagger_helper'
-
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'api/v1/users', type: :request do
-
   path '/api/v1/users' do
-
     get('list users') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -20,7 +17,6 @@ RSpec.describe 'api/v1/users', type: :request do
 
     post('create user') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -99,10 +95,8 @@ RSpec.describe 'api/v1/users', type: :request do
   end
 
   path '/signup' do
-
     post('create user') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -116,10 +110,8 @@ RSpec.describe 'api/v1/users', type: :request do
   end
 
   path '/login' do
-
     post('login user') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -133,10 +125,8 @@ RSpec.describe 'api/v1/users', type: :request do
   end
 
   path '/auto_login' do
-
     get('auto_login user') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -150,10 +140,8 @@ RSpec.describe 'api/v1/users', type: :request do
   end
 
   path '/' do
-
     get('login user') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -166,3 +154,4 @@ RSpec.describe 'api/v1/users', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
