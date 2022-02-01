@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authorized, only: [:destroy]
+
   # POST /signup
   def create
     user = User.new(user_params)
