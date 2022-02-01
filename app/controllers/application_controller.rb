@@ -9,16 +9,15 @@ class ApplicationController < ActionController::API
 
   def auth_header
     # { Authorization: 'Bearer <token>' }
-    request.headers['Authorization']
+    cookies.signed[:jwt]
   end
 
   def decoded_token
     return unless auth_header
-
-    token = auth_header.split(' ')[1]
+    puts auth_header
     # header: { 'Authorization': 'Bearer <token>' }
     begin
-      JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
+      JWT.decode(auth_header, SECRET_KEY, true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
     end
