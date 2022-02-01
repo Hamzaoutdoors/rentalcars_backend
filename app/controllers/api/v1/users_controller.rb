@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
 
     if user.save
       token = encode_token({ user_id: user.id })
-      render json: { username: user.username, email: user.email, token: token }
+      render json: { user: { username: user.username, email: user.email }, token: "Bearer #{token}" }
     else
       render json: { error: 'Invalid username or password', status: :invalid_user }
     end
@@ -19,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
 
     if user&.authenticate(params[:user][:password])
       token = encode_token({ user_id: user.id })
-      render json: { username: user.username, email: user.email, token: token }
+      render json: { user: { username: user.username, email: user.email }, token: "Bearer #{token}" }
     else
       render json: { error: 'Invalid username or password', status: :user_not_found }
     end
