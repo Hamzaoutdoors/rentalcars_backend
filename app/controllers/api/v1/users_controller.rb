@@ -1,5 +1,4 @@
 class Api::V1::UsersController < ApplicationController
-  # before_action :set_user, only: %i[show destroy]
 
   # POST /signup
   def create
@@ -27,26 +26,12 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # GET /auto_login
-  def auto_login
-    render json: @user
+  # DELETE /users/1
+  def destroy
+    cookies.delete(:jwt)
   end
 
-  # def show
-  #   render json: @user
-  # end
-
-  # # DELETE /users/1
-  # def destroy
-  #   render json: @user
-  #   @user.destroy
-  # end
-
   private
-
-  # def set_user
-  #   @user = User.find_by_id(params[:id])
-  # end
 
   # Only allow a list of trusted parameters through.
   def user_params
