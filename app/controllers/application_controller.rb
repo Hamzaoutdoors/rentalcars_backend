@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   include ::ActionController::Cookies
-  SECRET_KEY = 'HaNJLisLook1ng'
+  SECRET_KEY = 'HaNJLisLook1ng'.freeze
 
   def encode_token(payload)
     JWT.encode(payload, SECRET_KEY)
@@ -13,6 +13,7 @@ class ApplicationController < ActionController::API
 
   def decoded_token
     return unless auth_header
+
     puts auth_header
     # header: { 'Authorization': 'Bearer <token>' }
     begin
