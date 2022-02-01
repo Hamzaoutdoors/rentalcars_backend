@@ -1,4 +1,5 @@
 class Api::V1::ReservationsController < ApplicationController
+  before_action :authorized
   before_action :set_reservation, only: %i[show destroy]
 
   # GET /reservations
