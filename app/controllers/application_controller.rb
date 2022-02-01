@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ::ActionController::Cookies
+  before_action :authorized
   SECRET_KEY = 'HaNJLisLook1ng'.freeze
 
   def encode_token(payload)
