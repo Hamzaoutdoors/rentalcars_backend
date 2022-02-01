@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  include ::ActionController::Cookies
   before_action :authorized
   SECRET_KEY = 'HaNJLisLook1ng'.freeze
 
@@ -9,16 +8,16 @@ class ApplicationController < ActionController::API
 
   def auth_header
     # { Authorization: 'Bearer <token>' }
-    cookies.signed[:jwt]
+    request.headers['Authorization']
   end
 
   def decoded_token
     return unless auth_header
 
-    puts auth_header
+    token = auth_header.split(' ')[1]
     # header: { 'Authorization': 'Bearer <token>' }
     begin
-      JWT.decode(auth_header, SECRET_KEY, true, algorithm: 'HS256')
+      JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
     end
