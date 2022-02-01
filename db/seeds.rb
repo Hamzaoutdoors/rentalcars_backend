@@ -6,10 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(username: 'juanito', email: 'foo@foo.com')
-User.create(username: 'Laylita', email: 'foo0@foo.com')
-User.create(username: 'Nelsinito', email: 'foo1@foo.com')
-User.create(username: 'Hamzita', email: 'foo2@foo.com')
+
+User.create(username: 'juanito', email: 'foo@foo.com', password: 'admin123')
+User.create(username: 'Laylita', email: 'foo0@foo.com', password: 'admin123')
+User.create(username: 'Nelsinito', email: 'foo1@foo.com', password: 'admin123')
+User.create(username: 'Hamzita', email: 'foo2@foo.com', password: 'admin123')
 
 Car.create(name: 'Renegade', brand: 'Jeep', imgUrl: 'https://i.ibb.co/M6DqDcJ/2.png', user_id: 4)
 Car.create(name: 'Yaris', brand: 'Toyota', imgUrl: 'https://i.ibb.co/Hpq2DCn/4.png', user_id: 2)

@@ -1,22 +1,24 @@
 class ApplicationController < ActionController::API
+  include ::ActionController::Cookies
   before_action :authorized
+  SECRET_KEY = 'HaNJLisLook1ng'.freeze
 
   def encode_token(payload)
-    JWT.encode(payload, 'yourSecret')
+    JWT.encode(payload, SECRET_KEY)
   end
 
   def auth_header
     # { Authorization: 'Bearer <token>' }
-    request.headers['Authorization']
+    cookies.signed[:jwt]
   end
 
   def decoded_token
     return unless auth_header
 
-    token = auth_header.split[1]
+    puts auth_header
     # header: { 'Authorization': 'Bearer <token>' }
     begin
-      JWT.decode(token, 'yourSecret', true, algorithm: 'HS256')
+      JWT.decode(auth_header, SECRET_KEY, true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
     end
@@ -30,6 +32,7 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in?
+    # The !! is here to ensure that if logged_in_user return nil, this function will return false
     !!logged_in_user
   end
 
