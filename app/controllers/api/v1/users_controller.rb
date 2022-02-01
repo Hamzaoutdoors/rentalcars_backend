@@ -1,5 +1,4 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authorized, only: [:auto_login]
   # before_action :set_user, only: %i[show destroy]
 
   # POST /signup
@@ -8,7 +7,8 @@ class Api::V1::UsersController < ApplicationController
 
     if user.save
       token = encode_token({ user_id: user.id })
-      render json: { user: user, token: token, status: :created }
+      cookies.signed[:jwt] = { value:  token, httponly: true, expires: 1.hour.from_now }
+      render json: { username: user.username, email: user.email }
     else
       render json: { error: 'Invalid username or password', status: :invalid_user }
     end
