@@ -3,7 +3,7 @@ class Api::V1::CarsController < ApplicationController
 
   # GET /cars
   def index
-    @cars = Car.all
+    @cars = Car.all.includes(:description)
 
     render json: @cars.to_json(include: [:description])
   end
