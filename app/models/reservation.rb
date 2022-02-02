@@ -3,5 +3,6 @@ class Reservation < ApplicationRecord
   belongs_to :city
   belongs_to :user
 
-  validates :date, presence: true
+  validates :start_date, presence: true
+  validates :end_date, presence: true
 end
