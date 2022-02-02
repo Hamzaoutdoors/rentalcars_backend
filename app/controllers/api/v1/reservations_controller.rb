@@ -7,26 +7,30 @@ class Api::V1::ReservationsController < ApplicationController
     render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
   end
 
-  # GET /reservations/1
-  def show
-    render json: @reservation
-  end
-
   # POST /reservations
   def create
-    @reservation = Reservation.new(reservation_params)
+    @car = Car.find_by_id(params[:reservation][:car_id])
+    @reservation = Reservation.new(reservation_params.merge(user_id: @user.id, car_id: @car.id))
 
     if @reservation.save
-      render json: @reservation, status: :created
+      render json: @reservation.to_json(include: [:car]), status: :created
     else
-      render json: @reservation.errors, status: :unprocessable_entity
+      render json: { error: @car.errors.full_messages }, status: 409
     end
   end
 
   # DELETE /reservations/1
   def destroy
-    render json: @reservation
-    @reservation.destroy
+    if @reservation
+      @reservation.destroy
+      if @reservation.destroyed?
+        render json: { error: "Reservation with id: #{params[:id]} Successfully Canceled"}
+      else
+        render json: { error: "Reservation with id: #{params[:id]} cannot be canceled" }, status: 400 
+      end
+    else
+      render json: { error: 'Reservation not found'}, status: 409
+    end
   end
 
   private
@@ -37,6 +41,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:date, :user_id, :city_id, :car_id)
+    params.require(:reservation).permit(:start_date, :end_date, :city_id, :car_id)
   end
 end
