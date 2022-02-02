@@ -7,7 +7,8 @@ class Api::V1::UsersController < ApplicationController
 
     if user.save
       token = encode_token({ user_id: user.id })
-      render json: { user: { username: user.username, email: user.email }, token: "Bearer #{token}" }, status: 201
+      render json: { user: { username: user.username, email: user.email, id: user.id }, token: "Bearer #{token}" },
+             status: 201
     else
       render json: { error: user.errors.full_messages }, status: 400
     end
@@ -19,7 +20,8 @@ class Api::V1::UsersController < ApplicationController
 
     if user&.authenticate(params[:user][:password])
       token = encode_token({ user_id: user.id })
-      render json: { user: { username: user.username, email: user.email }, token: "Bearer #{token}" }, status: 200
+      render json: { user: { username: user.username, email: user.email, id: user.id }, token: "Bearer #{token}" },
+             status: 200
     else
       render json: { error: 'Invalid Email/Password' }, status: 401
     end
