@@ -13,7 +13,7 @@ class Api::V1::CarsController < ApplicationController
     if @car
       render json: @car.to_json(include: [:description]), status: :ok
     else
-      render json: { error: "Car not found" }, status: 400
+      render json: { error: 'Car not found' }, status: 400
     end
   end
 
@@ -21,7 +21,7 @@ class Api::V1::CarsController < ApplicationController
   def create
     @car = Car.create(car_params.merge(user_id: @user.id))
 
-    if @car.valid? 
+    if @car.valid?
       @description = Description.create(description_params.merge(insurance_fee: 3, car_id: @car.id))
       if @description.valid?
         render json: @car.to_json(include: [:description]), status: :created
@@ -41,10 +41,10 @@ class Api::V1::CarsController < ApplicationController
       if @car.destroyed?
         render json: { error: "Car with id: #{params[:id]} successfully destroyed" }, status: :ok
       else
-        render json: { error: "Car with id: #{params[:id]} cannot be destroyed" }, status: 400 
+        render json: { error: "Car with id: #{params[:id]} cannot be destroyed" }, status: 400
       end
     else
-      render json: { error: "Car not found" }, status: 409
+      render json: { error: 'Car not found' }, status: 409
     end
   end
 
