@@ -3,7 +3,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations
   def index
-    @reservations = Reservation.where(user_id: @user.id)
+    @reservations = Reservation.where(user_id: @user.id).includes(:city, car: [:description])
     render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
   end
 
