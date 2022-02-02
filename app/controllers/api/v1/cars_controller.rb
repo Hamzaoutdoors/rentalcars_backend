@@ -10,25 +10,42 @@ class Api::V1::CarsController < ApplicationController
 
   # GET /cars/1
   def show
-    render json: @car.to_json(include: [:description])
+    if @car
+      render json: @car.to_json(include: [:description]), status: :ok
+    else
+      render json: { error: "Car not found" }, status: 400
+    end
   end
 
   # POST /cars
   def create
-    @car = Car.new(car_params.merge(user_id: @user.id))
+    @car = Car.create(car_params.merge(user_id: @user.id))
 
-    if @car.save
-      render json: @car, status: :created
+    if @car.valid? 
+      @description = Description.create(description_params.merge(insurance_fee: 3, car_id: @car.id))
+      if @description.valid?
+        render json: @car.to_json(include: [:description]), status: :created
+      else
+        @car.destroy
+        render json: { error: @description.errors.full_messages }, status: 409
+      end
     else
-      render json: @car.errors, status: :unprocessable_entity
+      render json: { error: @car.errors.full_messages }, status: 409
     end
   end
 
   # DELETE /cars/1
   def destroy
-    render json: @car
-
-    @car.destroy
+    if @car
+      @car.destroy
+      if @car.destroyed?
+        render json: { error: "Car with id: #{params[:id]} successfully destroyed" }, status: :ok
+      else
+        render json: { error: "Car with id: #{params[:id]} cannot be destroyed" }, status: 400 
+      end
+    else
+      render json: { error: "Car not found" }, status: 409
+    end
   end
 
   private
@@ -40,5 +57,9 @@ class Api::V1::CarsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def car_params
     params.require(:car).permit(:name, :brand, :imgUrl)
+  end
+
+  def description_params
+    params.require(:description).permit(:price_daily, :price_monthly, :color)
   end
 end
