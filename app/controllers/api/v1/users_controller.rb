@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
       token = encode_token({ user_id: user.id })
       render json: { user: { username: user.username, email: user.email }, token: "Bearer #{token}" }, status: 201
     else
-      render json: { error: user.errors.full_messages  }, status: 400
+      render json: { error: user.errors.full_messages }, status: 400
     end
   end
 
@@ -17,11 +17,11 @@ class Api::V1::UsersController < ApplicationController
   def login
     user = User.find_by(email: params[:user][:email])
 
-    if user && user.authenticate(params[:user][:password])
+    if user&.authenticate(params[:user][:password])
       token = encode_token({ user_id: user.id })
       render json: { user: { username: user.username, email: user.email }, token: "Bearer #{token}" }, status: 200
     else
-      render json: { error: "Invalid Email/Password" }, status: 401
+      render json: { error: 'Invalid Email/Password' }, status: 401
     end
   end
 

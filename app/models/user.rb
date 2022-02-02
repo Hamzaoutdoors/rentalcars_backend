@@ -4,5 +4,5 @@ class User < ApplicationRecord
   has_many :cars, dependent: :destroy
 
   validates :username, presence: true
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true
 end
