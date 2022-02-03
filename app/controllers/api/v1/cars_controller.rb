@@ -1,5 +1,6 @@
 class Api::V1::CarsController < ApplicationController
   before_action :set_car, only: %i[show destroy]
+  before_action :authorized, only: [:show, :create, :destroy]
 
   # GET /cars
   def index
