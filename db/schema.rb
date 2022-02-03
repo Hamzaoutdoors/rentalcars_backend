@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_02_02_122127) do
   end
 
   create_table "descriptions", force: :cascade do |t|
-    t.string "insurance_fee"
+    t.decimal "insurance_fee"
     t.decimal "price_daily"
     t.decimal "price_monthly"
     t.string "color"
@@ -43,7 +43,8 @@ ActiveRecord::Schema.define(version: 2022_02_02_122127) do
   end
 
   create_table "reservations", force: :cascade do |t|
-    t.date "date"
+    t.date "start_date"
+    t.date "end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false

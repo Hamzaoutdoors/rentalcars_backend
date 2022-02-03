@@ -1,5 +1,6 @@
 class Api::V1::CarsController < ApplicationController
   before_action :set_car, only: %i[show destroy]
+  before_action :authorized, only: %i[show create destroy]
 
   # GET /cars
   def index
@@ -39,7 +40,7 @@ class Api::V1::CarsController < ApplicationController
     if @car
       @car.destroy
       if @car.destroyed?
-        render json: { error: "Car with id: #{params[:id]} successfully destroyed" }, status: :ok
+        render json: { message: "Car with id: #{params[:id]} successfully destroyed", id: params[:id] }, status: :ok
       else
         render json: { error: "Car with id: #{params[:id]} cannot be destroyed" }, status: 400
       end

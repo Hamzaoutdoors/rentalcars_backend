@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do  
     namespace :v1 do 
       resources :cars, only: %i[index show create destroy]
-      resources :users do 
-        resources :reservations, only: %i[index show create new destroy]
-      end
+      resources :reservations, only: %i[index show create new destroy]
      end
   end
 
