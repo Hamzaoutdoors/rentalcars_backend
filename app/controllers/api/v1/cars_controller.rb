@@ -39,7 +39,7 @@ class Api::V1::CarsController < ApplicationController
     if @car
       @car.destroy
       if @car.destroyed?
-        render json: { error: "Car with id: #{params[:id]} successfully destroyed" }, status: :ok
+        render json: { message: "Car with id: #{params[:id]} successfully destroyed", id: params[:id] }, status: :ok
       else
         render json: { error: "Car with id: #{params[:id]} cannot be destroyed" }, status: 400
       end
