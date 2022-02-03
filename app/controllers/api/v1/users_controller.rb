@@ -21,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
     if user&.authenticate(params[:user][:password])
       token = encode_token({ user_id: user.id })
       render json: { user: { username: user.username, email: user.email, id: user.id }, token: "Bearer #{token}" },
-             status: 200
+             status: 201
     else
       render json: { error: 'Invalid Email/Password' }, status: 401
     end

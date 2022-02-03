@@ -1,83 +1,92 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/cars', type: :request do
+  let(:user) { create(:user) }
+  let(:Authorization) { "Bearer #{JWT.encode({user_id: user[:id]}, 'HaNJLisLook1ng')}" }
+  let(:car) { create(:car, user_id: user[:id]) }
+  let(:car1) { create(:car, name: 'boo', user_id: user[:id]) }
 
   path '/api/v1/cars' do
-
     get('list cars') do
-      tags 'Cars'
-      security [ bearer_auth: [] ]
-
+      consumes 'application/json'
+      produces 'application/json'
       response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
         run_test!
       end
-
-      response '201', 'authentication passed' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith@gmail.com:123456')}" }
-        run_test!
-      end
-
-      response '401', 'authentication failed' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('bogus:bogus')}" }
-        run_test!
-      end
-      
     end
 
-    # post('create car') do
-    #   response(200, 'successful') do
+    post('create car') do
+      consumes 'application/json'
+      produces 'application/json'
+      security [ bearer_auth: [] ]
+      parameter name: :Authorization, in: :header, type: :string
+      parameter name: :data, in: :body, schema: {
+        type: :object,
+        properties: {
+          car: {
+            type: :object,
+            properties: {
+              name: { type: :string },
+              brand: { type: :string },
+              imgUrl: { type: :string },
+              user_id: { type: :string }
+            },
+            required: [ 'name', 'brand', 'imgUrl', 'user_id' ]
+          },
+          description: {
+            type: :object,
+            properties: {
+                price_daily: { type: :string },
+                price_monthly: { type: :string },
+                color: { type: :string },
+            },
+            required: [ 'price_daily', 'price_monthly', 'color' ]
+          }
+        },
+        required: [ 'car', 'description']
+      }
+      
+      response(201, 'successful') do
+        let(:data) { {
+          car: { name: 'smth', brand: 'smth', imgUrl: 'smth', user_id: user[:id]},
+          description: {price_daily: '10', price_monthly: '300', color: '#000'}
+          }}
+        run_test!
+      end
 
-    #     after do |example|
-    #       example.metadata[:response][:content] = {
-    #         'application/json' => {
-    #           example: JSON.parse(response.body, symbolize_names: true)
-    #         }
-    #       }
-    #     end
-    #     run_test!
-    #   end
-    # end
+      response(401, 'unauthorized') do
+        let(:Authorization) { 'blablubasdjasdsa ' }
+        let(:data) { {
+          car: { name: 'smth', brand: 'smth', imgUrl: 'smth', user_id: user[:id]},
+          description: {price_daily: '10', price_monthly: '300', color: '#000'}
+          }}
+        run_test!
+      end
+    end
   end
 
-  # path '/api/v1/cars/{id}' do
-  #   # You'll want to customize the parameter types...
-  #   parameter name: 'id', in: :path, type: :string, description: 'id'
+  path '/api/v1/cars/{id}' do
+    get('show car') do
+      consumes 'application/json'
+      security [ bearer_auth: [] ]
+      parameter name: :Authorization, in: :header, type: :string
+      parameter name: 'id', in: :path, type: :string, description: 'id'
+      response(200, 'successful') do
+        let(:id) { car[:id] }
 
-  #   get('show car') do
-  #     response(200, 'successful') do
-  #       let(:id) { '123' }
+        run_test!
+      end
+    end
 
-  #       after do |example|
-  #         example.metadata[:response][:content] = {
-  #           'application/json' => {
-  #             example: JSON.parse(response.body, symbolize_names: true)
-  #           }
-  #         }
-  #       end
-  #       run_test!
-  #     end
-  #   end
-
-  #   delete('delete car') do
-  #     response(200, 'successful') do
-  #       let(:id) { '123' }
-
-  #       after do |example|
-  #         example.metadata[:response][:content] = {
-  #           'application/json' => {
-  #             example: JSON.parse(response.body, symbolize_names: true)
-  #           }
-  #         }
-  #       end
-  #       run_test!
-  #     end
-  #   end
-  # end
+    delete('delete car') do
+      consumes 'application/json'
+      security [ bearer_auth: [] ]
+      parameter name: :Authorization, in: :header, type: :string
+      parameter name: 'id', in: :path, type: :string, description: 'id'
+      response(200, 'successful') do
+        let(:id) { car[:id] }
+        run_test!
+      end
+    end
+  end
 end

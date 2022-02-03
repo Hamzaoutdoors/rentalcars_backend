@@ -14,19 +14,100 @@ paths:
   "/api/v1/cars":
     get:
       summary: list cars
-      tags:
-      - Cars
-      security:
-      - bearer_auth: []
       responses:
         '200':
           description: successful
+    post:
+      summary: create car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
         '201':
-          description: authentication passed
+          description: successful
         '401':
-          description: authentication failed
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                car:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    brand:
+                      type: string
+                    imgUrl:
+                      type: string
+                    user_id:
+                      type: string
+                  required:
+                  - name
+                  - brand
+                  - imgUrl
+                  - user_id
+                description:
+                  type: object
+                  properties:
+                    price_daily:
+                      type: string
+                    price_monthly:
+                      type: string
+                    color:
+                      type: string
+                  required:
+                  - price_daily
+                  - price_monthly
+                  - color
+              required:
+              - car
+              - description
+  "/api/v1/cars/{id}":
+    get:
+      summary: show car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
       default: www.example.com
