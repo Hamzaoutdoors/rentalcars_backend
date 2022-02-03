@@ -4,7 +4,13 @@ class Api::V1::ReservationsController < ApplicationController
   # GET /reservations
   def index
     @reservations = Reservation.where(user_id: @user.id).includes(:city, car: [:description])
-    render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
+
+    if @reservations 
+      render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
+    else
+      render json: { error: 'No Reservation Found' }, status: 409
+    end
+    
   end
 
   # POST /reservations
@@ -24,7 +30,7 @@ class Api::V1::ReservationsController < ApplicationController
     if @reservation
       @reservation.destroy
       if @reservation.destroyed?
-        render json: { error: "Reservation with id: #{params[:id]} Successfully Canceled"}
+        render json: { message: "Reservation with id: #{params[:id]} Successfully Canceled", id: params[:id] }, status: 200
       else
         render json: { error: "Reservation with id: #{params[:id]} cannot be canceled" }, status: 400 
       end
