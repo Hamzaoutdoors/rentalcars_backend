@@ -13,7 +13,7 @@ class Api::V1::ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params.merge(user_id: @user.id, car_id: @car.id))
 
     if @reservation.save
-      render json: @reservation.to_json(include: [:car]), status: :created
+      render json: @reservation.to_json(include: [:city, { car: { include: [:description] } }]), status: :created
     else
       render json: { error: @car.errors.full_messages }, status: 409
     end
