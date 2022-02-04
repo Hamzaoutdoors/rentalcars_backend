@@ -26,20 +26,18 @@ RSpec.describe Car, type: :model do
   it 'is not valid with invalid name' do
     subject.name = nil
     expect(subject).to_not be_valid
-  end 
-   
-
+  end
 
   it 'is valid with valid brand' do
     expect(subject).to be_valid
-  end  
-  
+  end
+
   it 'is not valid with invalid brand' do
     subject.brand = nil
     expect(subject).to_not be_valid
   end
-  
+
   it 'is valid with valid imgUrl' do
     expect(subject).to be_valid
-  end  
+  end
 end

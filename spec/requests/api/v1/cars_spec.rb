@@ -1,8 +1,8 @@
 require 'swagger_helper'
-
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'api/v1/cars', type: :request do
   let(:user) { create(:user) }
-  let(:Authorization) { "Bearer #{JWT.encode({user_id: user[:id]}, 'HaNJLisLook1ng')}" }
+  let(:Authorization) { "Bearer #{JWT.encode({ user_id: user[:id] }, 'HaNJLisLook1ng')}" }
   let(:car) { create(:car, user_id: user[:id]) }
   let(:car1) { create(:car, name: 'boo', user_id: user[:id]) }
 
@@ -18,7 +18,7 @@ RSpec.describe 'api/v1/cars', type: :request do
     post('create car') do
       consumes 'application/json'
       produces 'application/json'
-      security [ bearer_auth: [] ]
+      security [bearer_auth: []]
       parameter name: :Authorization, in: :header, type: :string
       parameter name: :data, in: :body, schema: {
         type: :object,
@@ -31,35 +31,39 @@ RSpec.describe 'api/v1/cars', type: :request do
               imgUrl: { type: :string },
               user_id: { type: :string }
             },
-            required: [ 'name', 'brand', 'imgUrl', 'user_id' ]
+            required: %w[name brand imgUrl user_id]
           },
           description: {
             type: :object,
             properties: {
-                price_daily: { type: :string },
-                price_monthly: { type: :string },
-                color: { type: :string },
+              price_daily: { type: :string },
+              price_monthly: { type: :string },
+              color: { type: :string }
             },
-            required: [ 'price_daily', 'price_monthly', 'color' ]
+            required: %w[price_daily price_monthly color]
           }
         },
-        required: [ 'car', 'description']
+        required: %w[car description]
       }
-      
+
       response(201, 'successful') do
-        let(:data) { {
-          car: { name: 'smth', brand: 'smth', imgUrl: 'smth', user_id: user[:id]},
-          description: {price_daily: '10', price_monthly: '300', color: '#000'}
-          }}
+        let(:data) do
+          {
+            car: { name: 'smth', brand: 'smth', imgUrl: 'smth', user_id: user[:id] },
+            description: { price_daily: '10', price_monthly: '300', color: '#000' }
+          }
+        end
         run_test!
       end
 
       response(401, 'unauthorized') do
         let(:Authorization) { 'blablubasdjasdsa ' }
-        let(:data) { {
-          car: { name: 'smth', brand: 'smth', imgUrl: 'smth', user_id: user[:id]},
-          description: {price_daily: '10', price_monthly: '300', color: '#000'}
-          }}
+        let(:data) do
+          {
+            car: { name: 'smth', brand: 'smth', imgUrl: 'smth', user_id: user[:id] },
+            description: { price_daily: '10', price_monthly: '300', color: '#000' }
+          }
+        end
         run_test!
       end
     end
@@ -68,7 +72,7 @@ RSpec.describe 'api/v1/cars', type: :request do
   path '/api/v1/cars/{id}' do
     get('show car') do
       consumes 'application/json'
-      security [ bearer_auth: [] ]
+      security [bearer_auth: []]
       parameter name: :Authorization, in: :header, type: :string
       parameter name: 'id', in: :path, type: :string, description: 'id'
       response(200, 'successful') do
@@ -80,7 +84,7 @@ RSpec.describe 'api/v1/cars', type: :request do
 
     delete('delete car') do
       consumes 'application/json'
-      security [ bearer_auth: [] ]
+      security [bearer_auth: []]
       parameter name: :Authorization, in: :header, type: :string
       parameter name: 'id', in: :path, type: :string, description: 'id'
       response(200, 'successful') do
@@ -90,3 +94,4 @@ RSpec.describe 'api/v1/cars', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
