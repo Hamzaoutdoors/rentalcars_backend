@@ -3,9 +3,10 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations
   def index
-    @reservations = Reservation.where(user_id: @user.id).includes(:city, car: [:description])
+    @user = logged_in_user
+    @reservations = @user.reservations.includes(:city, car: [:description])
 
-    if @reservations
+    if @user
       render json: @reservations.to_json(include: [:city, { car: { include: [:description] } }])
     else
       render json: { error: 'No Reservation Found' }, status: 409
