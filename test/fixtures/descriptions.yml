@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  insurance_fee: MyString
+  price_daily: 9.99
+  price_monthly: 9.99
+
+two:
+  insurance_fee: MyString
+  price_daily: 9.99
+  price_monthly: 9.99
