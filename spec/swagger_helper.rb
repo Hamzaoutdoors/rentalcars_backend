@@ -35,7 +35,7 @@ RSpec.configure do |config|
           url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'https://hanjelscars.herokuapp.com'
             }
           }
         }

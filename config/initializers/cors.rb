@@ -13,7 +13,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
           methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
   allow do
-      origins 'http://[::1]:4000'
+      origins 'https://hanjelscars.herokuapp.com'
       resource '*',
             headers: :any,
             methods: [:get, :post, :put, :patch, :delete, :options, :head]
