@@ -28,7 +28,7 @@ require 'factory_bot_rails'
 begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec)
-rescue LoadError 
+rescue LoadError
   puts LoadError
 end
 begin
