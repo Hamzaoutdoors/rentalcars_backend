@@ -83,7 +83,7 @@ $ rspec spec
 
 ## Documentation
 
- - Click here [Rails API Documentation]() to see the documentation of our rails API
+ - Click here [Rails API Documentation](https://hanjelscars.herokuapp.com/api-docs/index.html) to see the documentation of our rails API
 
  ## Kanban Board
 
