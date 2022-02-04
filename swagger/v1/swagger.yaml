@@ -106,6 +106,53 @@ paths:
       responses:
         '200':
           description: successful
+  "/api/v1/reservations":
+    get:
+      summary: list reservations
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create reservation
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    start_date:
+                      type: string
+                    end_date:
+                      type: string
+                    user_id:
+                      type: string
+                    car_id:
+                      type: string
+                    city_id:
+                      type: string
+                  required:
+                  - start_date
+                  - end_date
+                  - user_id
+                  - car_id
+                  - city_id
+              required:
+              - reservation
 servers:
 - url: http://{defaultHost}
   variables:
