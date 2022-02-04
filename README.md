@@ -89,6 +89,11 @@ $ rspec spec
 
  - Click here [Kanban Board]() to see the kanban board of our project
  - We are four people was working on this project and every day we are adding new features to it using cards on the kanban board.
+</br>
+ <div align="center">
+    <img alt="erd_diagram" src="https://user-images.githubusercontent.com/80895497/152557813-14a47b7a-265c-47d2-a7e7-740e47ea173a.PNG">
+    <p>Kanban Board Last state</p>
+</div>
 
 ## Authors
 
