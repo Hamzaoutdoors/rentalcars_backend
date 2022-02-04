@@ -1,0 +1,182 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+  description: This is the first version of my API
+components:
+  securitySchemes:
+    bearer_auth:
+      type: https
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  "/api/v1/cars":
+    get:
+      summary: list cars
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                car:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    brand:
+                      type: string
+                    imgUrl:
+                      type: string
+                    user_id:
+                      type: string
+                  required:
+                  - name
+                  - brand
+                  - imgUrl
+                  - user_id
+                description:
+                  type: object
+                  properties:
+                    price_daily:
+                      type: string
+                    price_monthly:
+                      type: string
+                    color:
+                      type: string
+                  required:
+                  - price_daily
+                  - price_monthly
+                  - color
+              required:
+              - car
+              - description
+  "/api/v1/cars/{id}":
+    get:
+      summary: show car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+  "/api/v1/reservations":
+    get:
+      summary: list reservations
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create reservation
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    start_date:
+                      type: string
+                    end_date:
+                      type: string
+                    user_id:
+                      type: string
+                    car_id:
+                      type: string
+                    city_id:
+                      type: string
+                  required:
+                  - start_date
+                  - end_date
+                  - user_id
+                  - car_id
+              required:
+              - reservation
+  "/api/v1/reservations/{id}":
+    delete:
+      summary: delete car
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
