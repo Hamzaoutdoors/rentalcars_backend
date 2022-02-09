@@ -28,7 +28,7 @@ In this project we worked on backend part of the final capstone to create restfu
 
 </br>
  <div align="center">
-    <img alt="erd_diagram" src="https://user-images.githubusercontent.com/80895497/152529128-0939df57-ab9d-4afb-af72-7fe8ac767bb8.png">
+    <img alt="erd_diagram" src="https://user-images.githubusercontent.com/80895497/153301468-ba5412f3-db1f-41fe-bfd1-ec6692c82906.png">
     <p>Entity Relationship Diagram (ERD) of Rental Car project</p>
 </div>
 
